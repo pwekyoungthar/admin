@@ -1,0 +1,14 @@
+[
+  {
+    "value": 50000,
+    "reports": [
+      {
+        "username": "JohnDoe",
+        "role": "Admin",
+        "date": "2023-09-25T00:00:00.000Z",
+        "time": "11:11",
+        "updatedValue": 50000
+      }
+    ]
+  }
+]

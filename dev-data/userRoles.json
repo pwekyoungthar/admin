@@ -1,0 +1,9 @@
+[
+  { "id": 1, "name": "Admin", "status": true },
+  { "id": 2, "name": "Sub Admin", "status": true },
+  { "id": 3, "name": "Stuff", "status": true },
+  { "id": 4, "name": "Master", "status": true },
+  { "id": 5, "name": "Agent", "status": true },
+  { "id": 6, "name": "Affilate Agent", "status": true },
+  { "id": 7, "name": "User", "status": true }
+]
