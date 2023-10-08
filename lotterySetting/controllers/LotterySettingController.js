@@ -12,7 +12,6 @@ exports.createLotterySetting = async (req, res) => {
       ...req.body,
       gameName: gameSubName,
     };
-    console.log(newLotteryRule, "Lottery Rule Obj");
     const newLotterySetting = await LotterySetting.create(newLotteryRule);
     res.status(201).json({
       status: "success",
@@ -31,7 +30,7 @@ exports.createLotterySetting = async (req, res) => {
 
 // Read Lottery All Game Setting
 exports.getThai2DMorningSetting = async (req, res) => {
-  const id = "651e6ad82cda3d251beccb38";
+  const id = "6522f0c8160532b945f9972d";
 
   const query = LotterySetting.findById(id);
   const showLotterySetting = await query;
@@ -48,24 +47,22 @@ exports.getThai2DMorningSetting = async (req, res) => {
 exports.updateThai2DMorningSettingTime = async (req, res) => {
   try {
     const startDateString = req.body.startDate;
-    const dateRegex = /(\w{3} \w{3} \d{2} \d{4}) (\d{2}:\d{2}:\d{2})/;
-    const [, dateStr, timeStr] = startDateString.match(dateRegex);
-    const startDateTimeStr = `${dateStr} ${timeStr}`;
-    const startDateObj = new Date(startDateTimeStr);
+    const startDateObj = new Date(startDateString);
+
     if (isNaN(startDateObj)) {
       throw new Error("Invalid date");
     }
+
     const startDate = startDateObj.toDateString();
     const startTime = startDateObj.toLocaleTimeString("en-US");
 
     const endDateString = req.body.endDate;
+    const endDateObj = new Date(endDateString);
 
-    const [, endDateStr, endTimeStr] = endDateString.match(dateRegex);
-    const endDateTimeStr = `${endDateStr} ${endTimeStr}`;
-    const endDateObj = new Date(endDateTimeStr);
     if (isNaN(endDateObj)) {
       throw new Error("Invalid date");
     }
+
     const endDate = endDateObj.toDateString();
     const endTime = endDateObj.toLocaleTimeString("en-US");
 
@@ -77,7 +74,9 @@ exports.updateThai2DMorningSettingTime = async (req, res) => {
       limitAmount: req.body.limitAmount,
     };
 
-    const id = "651e6ad82cda3d251beccb38";
+    console.log(updateDateTimeObj);
+
+    const id = "6522f42426e25c80ef5be138";
     const updateThai2DMorningSetting = await LotterySetting.findByIdAndUpdate(
       id,
       updateDateTimeObj,

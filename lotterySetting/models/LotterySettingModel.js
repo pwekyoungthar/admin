@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const lotterySettingSchema = new mongoose.Schema({
   subCategoryId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -12,19 +13,19 @@ const lotterySettingSchema = new mongoose.Schema({
   },
   startDate: {
     type: Date,
-    required: [true, "Please Insert Date"],
+    default: Date.now,
   },
   startTime: {
     type: String,
-    required: [true, "Please Insert Date"],
+    default: "hello",
   },
   endDate: {
     type: Date,
-    required: [true, "Please Insert Date"],
+    default: Date.now,
   },
   endTime: {
     type: String,
-    required: [true, "Please Insert Date"],
+    default: "hello",
   },
   mainCompensation: {
     type: Number,
@@ -34,7 +35,6 @@ const lotterySettingSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-
   status: {
     type: Boolean,
     default: true,
@@ -44,5 +44,6 @@ const lotterySettingSchema = new mongoose.Schema({
     default: 0,
   },
 });
+
 const lotterySetting = mongoose.model("lotterySetting", lotterySettingSchema);
 module.exports = lotterySetting;
