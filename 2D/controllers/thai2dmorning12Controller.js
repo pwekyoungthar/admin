@@ -34,18 +34,85 @@ exports.create2DNum = async (req, res) => {
   }
 };
 
-// Read All Thain 2D Number
+// Read All Thain 2D Number For Admin
 exports.getAll2DNum = async (req, res) => {
   try {
-    const lotterySettingId = "65237b2ce91318305d844032";
+    const all2DNumber = await Thai2DNum.find();
+
+    res.status(200).json({
+      status: "Success",
+      length: all2DNumber.length,
+      data: {
+        all2DNumber,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "failed",
+      message: err,
+    });
+  }
+};
+
+// exports.getAll2DNum = async (req, res) => {
+//   try {
+//     const lotterySettingId = "65237b2ce91318305d844032";
+//     const currentDateObj = new Date();
+//     const dayIndex = currentDateObj.getDay();
+//     const currentDay = daysOfWeek[dayIndex];
+
+//     // Start Date and End Date
+//     const ruleObj = await LotterySetting.findById(lotterySettingId);
+//     console.log(ruleObj, "Rule Obj");
+
+//     if (ruleObj.status) {
+//       const startDate = new Date(ruleObj.startDate);
+//       const endDate = new Date(ruleObj.endDate);
+
+//       if (currentDay === "Sunday" || currentDay === "Saturday") {
+//         res.status(200).json({
+//           status: "Success",
+//           message: "Saturday and Sunday are off day",
+//         });
+//       }
+
+//       if (currentDateObj > startDate && currentDateObj < endDate) {
+//         res.status(200).json({
+//           status: "Success",
+//           data: {
+//             all2DNumber: all2DNumber,
+//           },
+//         });
+//       } else {
+//         res.status(200).json({
+//           status: "Success",
+//           message: "Over The Time",
+//         });
+//       }
+//     } else {
+//       res.status(200).json({
+//         status: "Success",
+//         message: "Comming Soon , Admin Closed",
+//       });
+//     }
+//   } catch (err) {
+//     res.status(400).json({
+//       status: "failed",
+//       message: err,
+//     });
+//   }
+// };
+
+// Read All Thain 2D Number For User
+exports.getAll2DNumUser = async (req, res) => {
+  try {
+    const lotterySettingId = "65241489f48e66dac2432590";
     const currentDateObj = new Date();
     const dayIndex = currentDateObj.getDay();
     const currentDay = daysOfWeek[dayIndex];
 
     // Start Date and End Date
     const ruleObj = await LotterySetting.findById(lotterySettingId);
-    console.log(ruleObj, "Rule Obj");
-
     if (ruleObj.status) {
       const startDate = new Date(ruleObj.startDate);
       const endDate = new Date(ruleObj.endDate);
@@ -58,10 +125,12 @@ exports.getAll2DNum = async (req, res) => {
       }
 
       if (currentDateObj > startDate && currentDateObj < endDate) {
+        const all2DNumber = await Thai2DNum.find();
         res.status(200).json({
           status: "Success",
+          length: all2DNumber.length,
           data: {
-            all2DNumber: all2DNumber,
+            all2DNumber,
           },
         });
       } else {
@@ -73,39 +142,7 @@ exports.getAll2DNum = async (req, res) => {
     } else {
       res.status(200).json({
         status: "Success",
-        message: "Comming Soon , Admin Closed",
-      });
-    }
-  } catch (err) {
-    res.status(400).json({
-      status: "failed",
-      message: err,
-    });
-  }
-};
-
-// Read All Thain 2D Number For User
-exports.getAll2DNumUser = async (req, res) => {
-  try {
-    const endTime = "1234560808";
-    const reqTime = new Date().toISOString();
-    if (endTime > reqTime) {
-      const queryObj = { ...req.query };
-      const excludeFields = ["page", "sort", "limit", "fields"];
-      excludeFields.forEach((el) => delete queryObj[el]);
-
-      const query = Thai2DNum.find();
-      const all2DNumber = await query;
-
-      res.status(200).json({
-        status: "Success",
-        data: {
-          all2DNumber: all2DNumber,
-        },
-      });
-    } else {
-      res.status(200).json({
-        status: "Comming Soon",
+        message: "Comming Soon , Admin Closed This Game",
       });
     }
   } catch (err) {

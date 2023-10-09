@@ -9,7 +9,7 @@ const thai2DNumSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  limitVal: {
+  limitAmount: {
     type: Number,
     default: 0,
   },
