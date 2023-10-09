@@ -30,7 +30,7 @@ exports.createLotterySetting = async (req, res) => {
 
 // Read Lottery All Game Setting
 exports.getThai2DMorningSetting = async (req, res) => {
-  const id = "65241489f48e66dac2432590";
+  const id = "65242bfd81844c97fb089e66";
 
   const query = LotterySetting.findById(id);
   const showLotterySetting = await query;
@@ -46,30 +46,19 @@ exports.getThai2DMorningSetting = async (req, res) => {
 // Update Single Lottery Game Setting Start Time , End Time and limitAmount
 exports.updateThai2DMorningSettingTime = async (req, res) => {
   try {
-    const startDate = new Date(req.body.startDate);
-    const endDate = new Date(req.body.endDate);
-
-    if (isNaN(startDate)) {
-      throw new Error("Invalid Start date");
-    }
-
-    if (isNaN(endDate)) {
-      throw new Error("Invalid End date");
-    }
-
     const updateDateTimeObj = {
-      startDate,
-      endDate,
+      startDate: req.body.startDate,
+      endDate: req.body.endDate,
       limitAmount: req.body.limitAmount,
     };
 
-    const id = "65241489f48e66dac2432590";
+    const id = "65242bfd81844c97fb089e66";
     const updateThai2DMorningSetting = await LotterySetting.findByIdAndUpdate(
       id,
       updateDateTimeObj,
       {
         new: true,
-        runValidator: true,
+        runValidators: true,
       }
     );
 

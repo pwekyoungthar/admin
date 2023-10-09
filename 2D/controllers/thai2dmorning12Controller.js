@@ -106,7 +106,7 @@ exports.getAll2DNum = async (req, res) => {
 // Read All Thain 2D Number For User
 exports.getAll2DNumUser = async (req, res) => {
   try {
-    const lotterySettingId = "65241489f48e66dac2432590";
+    const lotterySettingId = "65242bfd81844c97fb089e66";
     const currentDateObj = new Date();
     const dayIndex = currentDateObj.getDay();
     const currentDay = daysOfWeek[dayIndex];

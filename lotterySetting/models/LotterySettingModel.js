@@ -12,11 +12,11 @@ const lotterySettingSchema = new mongoose.Schema({
     required: [true, "Please Insert Sub Category Name"],
   },
   startDate: {
-    type: Date,
+    type: String,
     default: Date.now,
   },
   endDate: {
-    type: Date,
+    type: String,
     default: Date.now,
   },
   mainCompensation: {
