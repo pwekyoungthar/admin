@@ -13,19 +13,15 @@ const lotterySettingSchema = new mongoose.Schema({
   },
   startDate: {
     type: Date,
-    default: Date.now,
-  },
-  startTime: {
-    type: String,
-    default: "hello",
+    default: function () {
+      const currentDate = new Date();
+      currentDate.setHours(0, 1, 0, 0);
+      return currentDate;
+    },
   },
   endDate: {
     type: Date,
     default: Date.now,
-  },
-  endTime: {
-    type: String,
-    default: "hello",
   },
   mainCompensation: {
     type: Number,

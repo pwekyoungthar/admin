@@ -1,0 +1,16 @@
+[
+  {
+    "userName": "Mg Mg",
+    "userId": "1234",
+    "subCategoryID": "123456789",
+    "subCategoryName": "2d morning",
+    "date": "new Date()",
+    "sale": [
+      {
+        "productName": "00",
+        "productID": "000000",
+        "price": "50000"
+      }
+    ]
+  }
+]

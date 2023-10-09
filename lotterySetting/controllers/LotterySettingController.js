@@ -30,7 +30,7 @@ exports.createLotterySetting = async (req, res) => {
 
 // Read Lottery All Game Setting
 exports.getThai2DMorningSetting = async (req, res) => {
-  const id = "6522f0c8160532b945f9972d";
+  const id = "65241489f48e66dac2432590";
 
   const query = LotterySetting.findById(id);
   const showLotterySetting = await query;
@@ -43,40 +43,27 @@ exports.getThai2DMorningSetting = async (req, res) => {
   });
 };
 
-// Update Single Lottery Game Setting End Time
+// Update Single Lottery Game Setting Start Time , End Time and limitAmount
 exports.updateThai2DMorningSettingTime = async (req, res) => {
   try {
-    const startDateString = req.body.startDate;
-    const startDateObj = new Date(startDateString);
+    const startDate = new Date(req.body.startDate);
+    const endDate = new Date(req.body.endDate);
 
-    if (isNaN(startDateObj)) {
-      throw new Error("Invalid date");
+    if (isNaN(startDate)) {
+      throw new Error("Invalid Start date");
     }
 
-    const startDate = startDateObj.toDateString();
-    const startTime = startDateObj.toLocaleTimeString("en-US");
-
-    const endDateString = req.body.endDate;
-    const endDateObj = new Date(endDateString);
-
-    if (isNaN(endDateObj)) {
-      throw new Error("Invalid date");
+    if (isNaN(endDate)) {
+      throw new Error("Invalid End date");
     }
-
-    const endDate = endDateObj.toDateString();
-    const endTime = endDateObj.toLocaleTimeString("en-US");
 
     const updateDateTimeObj = {
       startDate,
-      startTime,
       endDate,
-      endTime,
       limitAmount: req.body.limitAmount,
     };
 
-    console.log(updateDateTimeObj);
-
-    const id = "6522f42426e25c80ef5be138";
+    const id = "65241489f48e66dac2432590";
     const updateThai2DMorningSetting = await LotterySetting.findByIdAndUpdate(
       id,
       updateDateTimeObj,
@@ -99,19 +86,3 @@ exports.updateThai2DMorningSettingTime = async (req, res) => {
     });
   }
 };
-
-// // Read Other User For Game Category
-// exports.getGameCategoryOther = async (req, res) => {
-//   const queryObj = { ...req.query };
-//   const excludeFields = ["page", "sort", "limit", "fields"];
-//   excludeFields.forEach((el) => delete queryObj[el]);
-
-//   const query = await GameCategory.find({ status: true });
-
-//   res.status(200).json({
-//     status: "Success",
-//     data: {
-//       gameCategory: query,
-//     },
-//   });
-// };

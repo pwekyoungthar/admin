@@ -1,5 +1,7 @@
+const mongoose = require("mongoose");
 const fs = require("fs");
 const Thai2DNum = require("../models/thai2dNumMorningModel");
+const LotterySetting = require("../../lotterySetting/models/LotterySettingModel");
 
 const num2dNumAll = JSON.parse(
   fs.readFileSync(`${__dirname}/../../dev-data/2ddata.json`, "utf-8")
@@ -35,34 +37,27 @@ exports.create2DNum = async (req, res) => {
 // Read All Thain 2D Number
 exports.getAll2DNum = async (req, res) => {
   try {
+    const lotterySettingId = "65237b2ce91318305d844032";
     const currentDateObj = new Date();
-    const currentDate = currentDateObj.toDateString();
     const dayIndex = currentDateObj.getDay();
     const currentDay = daysOfWeek[dayIndex];
-    const currentTime = currentDateObj.toLocaleTimeString();
 
-    const dateString = "Sun Oct 08 2023 00:00:00 GMT+0630 (Myanmar Time)";
+    // Start Date and End Date
+    const ruleObj = await LotterySetting.findById(lotterySettingId);
+    console.log(ruleObj, "Rule Obj");
 
-    // Create a Date object from the date string
-    const dateObj = new Date(dateString);
-    const endDate = dateObj.toDateString();
-    const endTime = dateObj.toLocaleTimeString("en-US");
+    if (ruleObj.status) {
+      const startDate = new Date(ruleObj.startDate);
+      const endDate = new Date(ruleObj.endDate);
 
-    console.log(endDate);
-    console.log(endDate);
+      if (currentDay === "Sunday" || currentDay === "Saturday") {
+        res.status(200).json({
+          status: "Success",
+          message: "Saturday and Sunday are off day",
+        });
+      }
 
-    // if (currentDay === "Sunday" || currentDay === "Saturday") {
-    //   res.status(200).json({
-    //     status: "Success",
-    //     message: "Saturday and Sunday are off day",
-    //   });
-    // }
-
-    if (endDate === currentDate) {
-      if (endTime > currentTime) {
-        const query = Thai2DNum.find();
-        const all2DNumber = await query;
-
+      if (currentDateObj > startDate && currentDateObj < endDate) {
         res.status(200).json({
           status: "Success",
           data: {
@@ -75,13 +70,12 @@ exports.getAll2DNum = async (req, res) => {
           message: "Over The Time",
         });
       }
+    } else {
+      res.status(200).json({
+        status: "Success",
+        message: "Comming Soon , Admin Closed",
+      });
     }
-
-    // if(date >  )
-
-    const queryObj = { ...req.query };
-    const excludeFields = ["page", "sort", "limit", "fields"];
-    excludeFields.forEach((el) => delete queryObj[el]);
   } catch (err) {
     res.status(400).json({
       status: "failed",
