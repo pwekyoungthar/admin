@@ -18,6 +18,8 @@ const mainUnitHistory = require("./mainUnit/route/mainUnitHistoryRoute");
 const thai2dMorning12 = require("./2D/routes/thai2dmorning12Route");
 const lotterySetting = require("./lotterySetting/routes/lotterySettingRoute");
 
+const luckynumber = require("./luckyNumber/routes/luckyNumberRoute");
+
 // Middleware
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -57,5 +59,8 @@ app.use("/api/v1/mainUnitHistory", mainUnitHistory);
 
 // Lottery Setting
 app.use("/api/v1/lotterysetting", lotterySetting);
+
+// Lucky Number
+app.use("/api/v1/luckynumber", luckynumber);
 
 module.exports = app;

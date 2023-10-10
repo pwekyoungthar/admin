@@ -1,18 +1,22 @@
 const mongoose = require("mongoose");
-const thai2DNumSchema = new mongoose.Schema({
+const luckyNumber2DSchema = new mongoose.Schema({
+  subCategoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "gamesubcats",
+    required: [true, "Please Insert Sub Category Id"],
+  },
+  gameName: {
+    type: String,
+    required: [true, "Please Insert Sub Category Name"],
+  },
   number: {
     type: String,
     required: [true, "2D Number must be add"],
-    unique: true,
   },
-  status: {
-    type: Boolean,
-    default: true,
-  },
-  limitAmount: {
-    type: Number,
-    default: 0,
+  date: {
+    type: Date,
+    default: Date.now,
   },
 });
-const Thai2DNum = mongoose.model("Thai2DNum", thai2DNumSchema);
-module.exports = Thai2DNum;
+const LuckyNumber2D = mongoose.model("LuckyNumber2D", luckyNumber2DSchema);
+module.exports = LuckyNumber2D;
