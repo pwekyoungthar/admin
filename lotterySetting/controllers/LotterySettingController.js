@@ -1,5 +1,7 @@
 const LotterySetting = require("../models/LotterySettingModel");
 const gamesubcats = require("../../gameCategory/models/gameSubCategoryModel");
+const batch = require("../../batch/batchModel");
+const lotterySetting = require("../models/LotterySettingModel");
 
 // Create Lottery Setting
 exports.createLotterySetting = async (req, res) => {
@@ -61,6 +63,27 @@ exports.updateThai2DMorningSettingTime = async (req, res) => {
         runValidators: true,
       }
     );
+
+    const batchArr = await batch.find();
+    const batchNum = batchArr.length;
+    const currentDate = new Date();
+    const gameSubId = "65191e5394d5823f2a6e2031";
+    const gameSubObj = await gamesubcats.findById(gameSubId);
+    const gameSubName = gameSubObj.subcat_name;
+
+    const newBatchObj = {
+      batchNumber: batchNum,
+      gameName: gameSubName,
+      subCategoryId: gameSubId,
+      date: currentDate,
+    };
+
+    const newBatch = await batch.create(newBatchObj);
+    const updateStatus = await lotterySetting.findByIdAndUpdate(
+      "65242bfd81844c97fb089e66",
+      { status: true }
+    );
+    console.log();
 
     res.status(200).json({
       status: "Success",
