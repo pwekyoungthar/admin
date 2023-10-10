@@ -15,7 +15,7 @@ router
   .patch(adminController.adminProtect, thai2dmorning12Controller.update2DNum);
 
 router
-  .route("/morning2d12amuser")
+  .route("/morning2d12amuser/:id")
   .get(authController.userProtect, thai2dmorning12Controller.getAll2DNumUser);
 
 module.exports = router;
